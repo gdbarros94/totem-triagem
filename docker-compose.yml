@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: triagem-backend
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT:-8000}:8000"
     volumes:
       - ./backend_data:/app/data
     env_file:
@@ -19,9 +19,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=${VITE_API_URL:-/api}
     container_name: triagem-frontend
     ports:
-      - "8080:80"
+      - "${FRONTEND_PORT:-8080}:80"
     env_file:
       - .env
     networks:

@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-// We proxy the API route through Nginx in prod, or Vite proxy in dev
-const baseURL = import.meta.env.PROD ? '/api' : 'http://localhost:8000/api'
+// A URL base pode vir do .env (VITE_API_URL) ou assumir o proxy /api como fallback
+const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:8000/api')
 
 export const api = axios.create({
   baseURL
