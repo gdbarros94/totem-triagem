@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: triagem-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend_data:/app/data
+    env_file:
+      - .env
+    networks:
+      - triagem-net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: triagem-frontend
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    networks:
+      - triagem-net
+    depends_on:
+      - backend
+
+networks:
+  triagem-net:
+    driver: bridge
